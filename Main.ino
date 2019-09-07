@@ -55,7 +55,7 @@ void loop() {
   //In order to do this we will trigger the display binary feature. In our example the time is 15:57, the output should be
   //00001111
   //00111001
-  displayBinary("00001111","00111001",0xFEFEFE,0xCD0000);
+  displayBinary(15,57,0xFEFEFE,0xCD0000);
   delay(3000);
 }
 
@@ -72,7 +72,7 @@ void loop() {
  *  FIELD_NUMBER-1 (
  */
   
-void displayBinary(char upperBit[8], char lowerBit[0], int baseClr, int pageClr) {
+void displayBinary(int upperBit, int lowerBit, int baseClr, int pageClr) {
 
  //This function will process two input values, alongside a colour set on 01 to give a visual indication of what page we are looking at. I.e. every page has it's own colour.
  
@@ -81,11 +81,11 @@ void displayBinary(char upperBit[8], char lowerBit[0], int baseClr, int pageClr)
 
 //Now let's decompose the two ints to binary digit thingies.
 
-char Line1 = upperBit;
+char* Line1 = itob(upperBit);
 
 Serial.println("Upper byte:");
 Serial.println(Line1);
-char Line2 = lowerBit;
+char* Line2 = itob(lowerBit);
 Serial.println("Lower byte:");
 Serial.println(Line2);
 
@@ -96,9 +96,8 @@ int basenumber;
 for (basenumber = 49; basenumber < 56; ++basenumber) {
   leds[basenumber] = pageClr;
 }
-      //leds[8] = baseClr;
-      //leds[45] = pageClr;
-      //leds[102] = pageClr;
+//Show the page colour
+
       FastLED.show();
       delay(1000);
 
