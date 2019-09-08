@@ -1,15 +1,20 @@
 //Hello Libraries
-#include <FastLED.h>
+  #include <FastLED.h>
 
 //There are probably a bunch of variables I need to define. So let's do that
 //WiFi Variables go here
 //NTP server goes here
+
 //PIN for 2812 IO goes here
-#define DATA_PIN 5
-#define NUM_LEDS 112
-CRGB leds[NUM_LEDS];
+  #define DATA_PIN 5  //Currently, we listen on D5, which corresponds to 5
+  #define NUM_LEDS 112 //This is the total number of LEDs (8*112)
+  
+  CRGB leds[NUM_LEDS];
+
 //PIN for switch button goes here
+ 
  //Let's build an array for the LED values. Each primary element contains all values of all LEDs on one chip.
+ //Careful: this array may be obsolete. Also: it starts at 1, when it should really start at 0.
 
  int ledGrid[16][7] ={
 
@@ -34,22 +39,21 @@ CRGB leds[NUM_LEDS];
 
 void setup() {
 
+//We initialise FastLED and add the LEDs to it.
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-  // put your setup code here, to run once:
-  
-  //Probably need to get this motherfucker online
-  //Then need to get a date and time. These values are unlikely to be unstable, unless some really weird shit goes down.
-  //
 
-Serial.begin(9600);
+//Probably need to get this motherfucker online
+//Then need to get a date and time. These values are unlikely to be unstable, unless some really weird shit goes down.
+//
+
+//For debugging purposes, we want to listen to the Serial Port
+Serial.begin(115200);
 delay(25);  
 Serial.println("Hello there");
+
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
-
   
   //This is where we want to get initially. Display a pseudo time (before we actually implement a real time clock)
   //In order to do this we will trigger the display binary feature. In our example the time is 15:57, the output should be
@@ -72,22 +76,70 @@ void loop() {
  *  FIELD_NUMBER-1 (
  */
   
-void displayBinary(int upperBit, int lowerBit, int baseClr, int pageClr) {
+void displayBinary(int upperByte, int lowerByte, int baseClr, int pageClr) {
 
- //This function will process two input values, alongside a colour set on 01 to give a visual indication of what page we are looking at. I.e. every page has it's own colour.
- 
+ //This function will process two input values, alongside a colour set on 01 to give a visual 
+ //indication of what page we are looking at. I.e. every page has it's own colour.
+ //Debug indicator: function starts running
+ Serial.println("displayBinary was triggered");
+
  //Let's do some reality checks. First things first, with 8 bit we can display values from 0-255
- //TODO: Let's round the values first. Then make sure both values are < 256.
+ //TODO: Let's round the values first. Then make sure both values are < 256. If the values are
+ //larger than 255, we'll just make them 255. As they say in German: was nicht passt wird passend gemacht.
 
+ if (upperByte > 255) {upperByte = 255;}
+ if (lowerByte > 255) {lowerByte = 255;}
+ Serial.println("Values cut off at 255");
+Serial.println();
+//Actually, we don't even need to round. They are integers for a reason. Let's just check what we have for debut
+Serial.print("Upper line: ");
+Serial.print(upperByte);
+Serial.print(" - Lowerline: ");
+Serial.println(lowerByte);
+Serial.println();
 //Now let's decompose the two ints to binary digit thingies.
 
-char* Line1 = itob(upperBit);
-
-Serial.println("Upper byte:");
+//Method 1 using the itob function
+/*
+char* Line1 = itob(upperByte);
+Serial.print("Upper byte: ");
 Serial.println(Line1);
-char* Line2 = itob(lowerBit);
-Serial.println("Lower byte:");
+char* Line2 = itob(lowerByte);
+Serial.print("Lower byte: ");
 Serial.println(Line2);
+Serial.println();
+*/
+
+//Method 2, using stuffs from Stackoverflow:
+
+int value1 = upperByte;  // assuming a 32 bit int
+int i;
+char Line1[8];
+for (i = 0; i < 8; ++i) {
+    Line1[i] = (value1 >> i) & 1;
+}
+int value2 = lowerByte;  // assuming a 32 bit int
+int ib;
+char Line2[8];
+for (ib = 0; ib < 8; ++ib) {
+    Line2[ib] = (value2 >> ib) & 1;
+}
+
+Serial.print("Upper byte: ");
+Serial.println(Line1[0]);
+Serial.println(Line1[1]);
+Serial.println(Line1[2]);
+Serial.println(Line1[3]);
+Serial.println(Line1[4]);
+Serial.println(Line1[5]);
+Serial.println(Line1[6]);
+Serial.println(Line1[7]);
+Serial.println(Line1[8]);
+Serial.println(Line1[9]);
+Serial.println(Line1[10]);
+Serial.print("Lower byte: ");
+Serial.println(Line2);
+Serial.println();
 
 //Let's do LEDs
 
