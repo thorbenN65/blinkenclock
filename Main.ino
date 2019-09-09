@@ -141,7 +141,7 @@ for (basenumber = 49; basenumber < 56; ++basenumber) {
   
   //01
   Serial.println("\n\n Let's determine the status for every dot of 7 LEDs");
-  if (BinUpperLEDs[1] == '1') {
+  if (BinUpperLEDs[7] == '1') {
     int LedValue;
     for (LedValue = 0; LedValue < 7; ++LedValue) {
       leds[LedValue] = baseClr;
@@ -158,7 +158,7 @@ for (basenumber = 49; basenumber < 56; ++basenumber) {
     Serial.println("Dot 1 is off.");   
   }
       //02
-  if (BinUpperLEDs[2] == '1') {
+  if (BinUpperLEDs[6] == '1') {
     int LedValue;
     for (LedValue = 7; LedValue < 14; ++LedValue) {
       leds[LedValue] = baseClr;
@@ -174,7 +174,7 @@ for (basenumber = 49; basenumber < 56; ++basenumber) {
     Serial.println("Dot 2 is off.");    
   }
 
-  if (BinUpperLEDs[3] == '1') {
+  if (BinUpperLEDs[5] == '1') {
     int LedValue;
     for (LedValue = 14; LedValue < 21; ++LedValue) {
       leds[LedValue] = baseClr;
@@ -205,7 +205,7 @@ for (basenumber = 49; basenumber < 56; ++basenumber) {
     Serial.println("Dot 4 is off.");
   }
 
-    if (BinUpperLEDs[5] == '1') {
+    if (BinUpperLEDs[3] == '1') {
     int LedValue;
     for (LedValue = 28; LedValue < 35; ++LedValue) {
       leds[LedValue] = baseClr;
@@ -222,7 +222,7 @@ for (basenumber = 49; basenumber < 56; ++basenumber) {
     Serial.println("Dot 5 is off.");    
   }
 
-    if (BinUpperLEDs[6] == '1') {
+    if (BinUpperLEDs[2] == '1') {
     int LedValue;
     for (LedValue = 35; LedValue < 42; ++LedValue) {
       leds[LedValue] = baseClr;
@@ -239,7 +239,7 @@ for (basenumber = 49; basenumber < 56; ++basenumber) {
     Serial.println("Dot 6 is off.");   
   }
 
-    if (BinUpperLEDs[7] == '1') {
+    if (BinUpperLEDs[1] == '1') {
     int LedValue;
     for (LedValue = 42; LedValue < 49; ++LedValue) {
       leds[LedValue] = baseClr;
