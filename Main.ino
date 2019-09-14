@@ -59,8 +59,30 @@ void loop() {
   //In order to do this we will trigger the display binary feature. In our example the time is 15:57, the output should be
   //00001111
   //00111001
+  delay(10000);
+  Serial.println("15 und 57");
   displayBinary(15,57,0xFEFEFE,0xCD0000);
-  delay(3000);
+  delay(10000);
+    Serial.println("300 und 400");
+  displayBinary(300,400,0xFEFEFE,0xCD0000);
+  delay(10000);
+    Serial.println("0 und 0");
+  displayBinary(0,0,0xFEFEFE,0xCD0000);
+  delay(10000);
+    Serial.println("23 und 59");
+  displayBinary(23,59,0xFEFEFE,0xCD0000);
+  delay(10000);
+    Serial.println("12 und 12");
+  displayBinary(12,12,0xFEFEFE,0xCD0000);
+    delay(10000);
+      Serial.println("255 und 254");
+  displayBinary(255,254,0xFEFEFE,0xCD0000);
+    delay(10000);
+      Serial.println("128 und 64");
+  displayBinary(128,64,0xFEFEFE,0xCD0000);
+    delay(10000);
+      Serial.println("77 und 88");
+  displayBinary(77,88,0xFEFEFE,0xCD0000);
 }
 
 
@@ -103,10 +125,10 @@ Serial.println();
 
 //Now let's decompose the two ints to binary digit thingies.
 //Method 1 using the itob function
-char* BinUpperLEDs = itob(upperByte);
+char* BinUpperLEDs = itob3(upperByte);
 Serial.print("Upper line in binary: ");
 Serial.println(BinUpperLEDs);
-char* BinLowerLEDs = itob(lowerByte);
+char* BinLowerLEDs = itob2(lowerByte);
 Serial.print("Lower line in binary: ");
 Serial.println(BinLowerLEDs);
 Serial.println();
@@ -257,6 +279,15 @@ for (basenumber = 49; basenumber < 56; ++basenumber) {
   }
   Serial.println("Upper Line done\nCAUTION: UpperLine has only 7 LEDs\n");
 
+
+/* NOTE TO MYSELF
+
+The upcoming code is so damn repetitive, it should be
+fairly easy to get this down to a few lines of code.
+I would stick by the principle though, but but in a lot 
+more loops and stuffs.
+
+*/
 //Let's check every digit on line 2
  //First things first, for testing, let's rip the array open
  Serial.println("Ripping the array open. Displaying every bit manually for Line TWO:");
@@ -268,124 +299,142 @@ for (basenumber = 49; basenumber < 56; ++basenumber) {
  Serial.print(BinLowerLEDs[5]);
  Serial.print(BinLowerLEDs[6]);
  Serial.println(BinLowerLEDs[7]);
- /* 
-  //01
-  if (BinUpperLEDs[1] == '1') {
+
+  
+  //09
+  if (BinLowerLEDs[7] == '1') {
     int LedValue;
-    for (LedValue = 0; LedValue < 7; ++LedValue) {
+    for (LedValue = 56; LedValue < 63; ++LedValue) {
       leds[LedValue] = baseClr;
     }
-    Serial.println("Dot 1 is on.");
+    Serial.println("Dot 9 is on.");
 
   }
   else{
     int LedValue;
-    for (LedValue = 0; LedValue < 7; ++LedValue) {
+    for (LedValue = 56; LedValue < 63; ++LedValue) {
       leds[LedValue] = 0x000000;
       
     } 
-    Serial.println("Dot 1 is off.");   
+    Serial.println("Dot 9 is off.");   
   }
-      //02
-  if (BinUpperLEDs[2] == '1') {
+      //10
+  if (BinLowerLEDs[6] == '1') {
     int LedValue;
-    for (LedValue = 7; LedValue < 14; ++LedValue) {
+    for (LedValue = 63; LedValue < 70; ++LedValue) {
       leds[LedValue] = baseClr;
       
     }
-    Serial.println("Dot 2 is on.");
+    Serial.println("Dot 10 is on.");
   }
   else{
     int LedValue;
-    for (LedValue = 7; LedValue < 14; ++LedValue) {
+    for (LedValue = 63; LedValue < 70; ++LedValue) {
       leds[LedValue] = 0x000000;
     }
-    Serial.println("Dot 2 is off.");    
+    Serial.println("Dot 10 is off.");    
   }
 
-  if (BinUpperLEDs[3] == '1') {
+  if (BinLowerLEDs[5] == '1') {
     int LedValue;
-    for (LedValue = 14; LedValue < 21; ++LedValue) {
+    for (LedValue = 70; LedValue < 77; ++LedValue) {
       leds[LedValue] = baseClr;
       
     }
-    Serial.println("Dot 3 is on.");
+    Serial.println("Dot 11 is on.");
   }
   else{
     int LedValue;
-    for (LedValue = 14; LedValue < 21; ++LedValue) {
+    for (LedValue = 70; LedValue < 77; ++LedValue) {
       leds[LedValue] = 0x000000;
     }
-    Serial.println("Dot 3 is off.");    
+    Serial.println("Dot 11 is off.");    
   }
 
-    if (BinUpperLEDs[4] == '1') {
+    if (BinLowerLEDs[4] == '1') {
     int LedValue;
-    for (LedValue = 21; LedValue < 28; ++LedValue) {
+    for (LedValue = 77; LedValue < 84; ++LedValue) {
       leds[LedValue] = baseClr;
     }
-    Serial.println("Dot 4 is on.");
+    Serial.println("Dot 12 is on.");
   }
   else{
     int LedValue;
-    for (LedValue = 21; LedValue < 28; ++LedValue) {
+    for (LedValue = 77; LedValue < 84; ++LedValue) {
       leds[LedValue] = 0x000000;
     }
-    Serial.println("Dot 4 is off.");
+    Serial.println("Dot 12 is off.");
   }
 
-    if (BinUpperLEDs[5] == '1') {
+    if (BinLowerLEDs[3] == '1') {
     int LedValue;
-    for (LedValue = 28; LedValue < 35; ++LedValue) {
+    for (LedValue = 84; LedValue < 91; ++LedValue) {
       leds[LedValue] = baseClr;
       
     }
-    Serial.println("Dot 5 is on.");
+    Serial.println("Dot 13 is on.");
   }
   else{
     int LedValue;
-    for (LedValue = 28; LedValue < 35; ++LedValue) {
+    for (LedValue = 84; LedValue < 91; ++LedValue) {
       leds[LedValue] = 0x000000;
       
     }
-    Serial.println("Dot 5 is off.");    
+    Serial.println("Dot 13 is off.");    
   }
 
-    if (BinUpperLEDs[6] == '1') {
+    if (BinLowerLEDs[2] == '1') {
     int LedValue;
-    for (LedValue = 35; LedValue < 42; ++LedValue) {
+    for (LedValue = 91; LedValue < 98; ++LedValue) {
       leds[LedValue] = baseClr;
       
     }
-    Serial.println("Dot 6 is on.");
+    Serial.println("Dot 14 is on.");
   }
   else{
     int LedValue;
-    for (LedValue = 35; LedValue < 42; ++LedValue) {
+    for (LedValue = 91; LedValue < 98; ++LedValue) {
       leds[LedValue] = 0x000000;
       
     } 
-    Serial.println("Dot 6 is off.");   
+    Serial.println("Dot 14 is off.");   
   }
 
-    if (BinUpperLEDs[7] == '1') {
+    if (BinLowerLEDs[1] == '1') {
     int LedValue;
-    for (LedValue = 42; LedValue < 49; ++LedValue) {
+    for (LedValue = 98; LedValue < 105; ++LedValue) {
       leds[LedValue] = baseClr;
       
     }
-    Serial.println("Dot 7 is on.");
+    Serial.println("Dot 15 is on.");
   }
   else{
     int LedValue;
-    for (LedValue = 42; LedValue < 49; ++LedValue) {
+    for (LedValue = 98; LedValue < 105; ++LedValue) {
       leds[LedValue] = 0x000000;
       
     }
-    Serial.println("Dot 7 is off.");    
+    Serial.println("Dot 15 is off.");    
   }
 
-*/
+      if (BinLowerLEDs[0] == '1') {
+    int LedValue;
+    for (LedValue = 105; LedValue < 112; ++LedValue) {
+      leds[LedValue] = baseClr;
+      
+    }
+    Serial.println("Dot 16 is on.");
+  }
+  else{
+    int LedValue;
+    for (LedValue = 105; LedValue < 112; ++LedValue) {
+      leds[LedValue] = 0x000000;
+      
+    }
+    Serial.println("Dot 16 is off.");    
+  }
+
+
 
 //We have identified every dot that should be on or off. There's only one thing left to do.
 //Launch the fireworks.
@@ -399,12 +448,22 @@ for (basenumber = 49; basenumber < 56; ++basenumber) {
 
 
 
-   char* itob(int i) {
-      static char bits[8] = {'0','0','0','0','0','0','0','0'};
-      int bits_index = 7;
-      while ( i > 0 ) {
-         bits[bits_index--] = (i & 1) + '0';
-         i = ( i >> 1);
+   char* itob3(int i3) {
+      static char bits3[8] = {'0','0','0','0','0','0','0','0'};
+      int bits_index3 = 7;
+      while ( i3 > 0 ) {
+         bits3[bits_index3--] = (i3 & 1) + '0';
+         i3 = ( i3 >> 1);
       }
-      return bits;
+      return bits3;
+   }
+
+      char* itob2(int i2) {
+      static char bits2[8] = {'0','0','0','0','0','0','0','0'};
+      int bits_index2 = 7;
+      while ( i2 > 0 ) {
+         bits2[bits_index2--] = (i2 & 1) + '0';
+         i2 = ( i2 >> 1);
+      }
+      return bits2;
    }
